@@ -1,45 +1,44 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# HealthCheck for Sites and Services - Monitoring Script:
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+## Introduction
+This is a shell script with wget, curl and awk commands to monitor and notify the health of WebServices & Websites. It can be scheduled to run as a cronjob and it monitors whether servers/services are UP, DOWN or SLOW and notifies via email whenever there is change in state.  
+Sites and services of WSO2 servers are used in configurations to demonstrate use with WSO2.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+## Basic feature list:  
+Monitors any HTTP or HTTPS URL, checking for “200” status returned  
+Monitors Web-services based on codes in xml response (for checking Admin service of WSO2 server, it checks for RUNNING code in xml response) 
+Can be applied to monitor multiple sites/services  
+Checks request fulfillment time for slow responses, not just UP/DOWN  
+Sends email notification on state change (UP, SLOW, or DOWN)  
+Customizable To/From notification settings  
+Customizable SLOW latency threshold  
+Tracks previous state change and last update to avoid multiple notifications  
+Uses single text file for data storage, no DB necessary (configurable to have separate status files for Services and Sites)  
+No agents or special software to install
 
----
+## Monitoring categories 
+1. Sites :  Monitor carbon consoles or any http/https sites, checking for “200” status returned  
+2. Services :  Monitor Admin service for WSO2 server status, checking for xml response codes  
 
-## Edit a file
+## Sample Email Response (for status changes)  
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+Time: 2018-06-28 00:07:56  
+Site: https://localhost:9543/console/  
+Status: DOWN  
+Latency: 0 sec  
+Previous status: UP  
+Previous change: 2018-06-28 00:06:01  
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+Time: 2018-06-28 00:07:56  
+Service: https://localhost:9443/services/ServerAdmin  
+Status: SLOW  
+Latency: 15 sec  
+Previous status: UP  
+Previous change: 2018-06-28 00:06:02  
 
----
 
-## Create a file
+## Sample Cronjob Definition  
+*/5 * * * * root /home/username/HealthCheck.sh 
 
-Next, you’ll add a new file to this repository.
-
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
-
----
-
-## Clone a repository
-
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
-
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
-
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+## Environment
+This script (HealthCheck.sh) is tested on MacOS, changes may be required for other unix environments
