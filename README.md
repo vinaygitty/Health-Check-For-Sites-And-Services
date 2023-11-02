@@ -1,8 +1,7 @@
 # HealthCheck for Sites and Services - Monitoring Script:
 
 ## Introduction
-This is a shell script with wget, curl and awk commands to monitor and notify the health of WebServices & Websites. It can be scheduled to run as a cronjob and it monitors whether servers/services are UP, DOWN or SLOW and notifies via email whenever there is change in state.  
-Sites and services of WSO2 servers are used in configurations to demonstrate use with WSO2.
+This is a shell script that utilizes wget, curl, and awk commands to monitor and notify the health of web services and websites. It can be scheduled to run as a cronjob and monitors whether servers or services are up, down, or slow, notifying via email whenever there is a change in state. It uses the configurations of sites and services from WSO2 servers to demonstrate its use with WSO2.
 
 ## Basic feature list:  
 Monitors any HTTP or HTTPS URL, checking for “200” status returned  
